@@ -1,0 +1,31 @@
+package warehouse.Entities;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+public class WarehouseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long warehouseId;
+
+    private Long totalArea;
+    private Long remainingSpace;
+
+    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RackEntity> racks = new ArrayList<>();
+
+    public void reduceRemainingSpace(Double productSize) {
+        if (this.remainingSpace < productSize) {
+            throw new IllegalStateException("Insufficient space in warehouse: " + this.warehouseId);
+        }
+        this.remainingSpace -= productSize.longValue();
+    }
+}
