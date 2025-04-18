@@ -4,15 +4,15 @@ import java.util.List;
 
 public class WarehouseConfigRequestDTO {
 
-    private Long totalArea;
+    private Double totalArea;
     private List<RackConfig> racks;
 
-    public Long getTotalArea() {
+    public Double getTotalArea() {
         return totalArea;
     }
 
     public void setTotalArea(Long totalArea) {
-        this.totalArea = totalArea;
+        this.totalArea = Double.valueOf(totalArea);
     }
 
     public List<RackConfig> getRacks() {
@@ -24,14 +24,14 @@ public class WarehouseConfigRequestDTO {
     }
 
     public static class RackConfig {
-        private Long capacity;
+        private Double capacity;
         private Integer numberOfCompartments;
 
-        public Long getCapacity() {
+        public Double getCapacity() {
             return capacity;
         }
 
-        public void setCapacity(Long capacity) {
+        public void setCapacity(Double capacity) {
             this.capacity = capacity;
         }
 

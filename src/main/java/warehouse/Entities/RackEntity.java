@@ -14,8 +14,8 @@ public class RackEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long rackId;
-    private Long area;
-    private Long capacity;
+    private Double area;
+    private Double capacity;
 
 
     @ManyToOne

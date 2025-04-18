@@ -21,11 +21,11 @@ public class ProductEntity {
     private Double weight;
 
     @Enumerated(EnumType.STRING)
-    private ACTION action; // Action could be something like "Added", "Removed", etc.
-    private Long userId; // Assuming employee ID as a Long
-    private LocalDateTime timeOfMovement; // Time of the movement
+    private ACTION action;
+    private Long userId;
+    private LocalDateTime timeOfMovement;
 
     @ManyToOne
     @JoinColumn(name = "compartment_id")
-    private CompartmentEntity compartment; // Added to establish the relationship
+    private CompartmentEntity compartment;
 }

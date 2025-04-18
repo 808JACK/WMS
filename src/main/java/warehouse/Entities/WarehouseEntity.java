@@ -16,8 +16,8 @@ public class WarehouseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long warehouseId;
 
-    private Long totalArea;
-    private Long remainingSpace;
+    private Double totalArea;
+    private Double remainingSpace;
 
     @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RackEntity> racks = new ArrayList<>();
@@ -26,6 +26,6 @@ public class WarehouseEntity {
         if (this.remainingSpace < productSize) {
             throw new IllegalStateException("Insufficient space in warehouse: " + this.warehouseId);
         }
-        this.remainingSpace -= productSize.longValue();
+        this.remainingSpace -= productSize;
     }
 }

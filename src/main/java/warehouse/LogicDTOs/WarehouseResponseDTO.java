@@ -8,14 +8,14 @@ import java.util.List;
 public class WarehouseResponseDTO {
 
     private Long warehouseId;
-    private Long totalArea;
-    private Long remainingSpace;
+    private Double totalArea;
+    private Double remainingSpace;
     private List<RackResponse> racks;
 
     @Data
     public static class RackResponse {
         private Long rackId;
-        private Long capacity;
+        private Double capacity;
         private List<Long> compartmentIds;
     }
 }
