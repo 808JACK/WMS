@@ -10,7 +10,6 @@ public class ProductStorageRequestDTO {
     private CATEGORY category;
     private Double size;
     private Double weight;
-    private Long empId;
 
     // Getters and Setters
 }
