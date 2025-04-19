@@ -14,6 +14,7 @@ public class ProductStorageResponseDto {
     private Double size;
     private Double weight;
     private String action;
+    private Long quantity;
     private Long empId; // Maps to ProductEntity.userId
     private LocalDateTime timeOfMovement;
     private Long movementId;
