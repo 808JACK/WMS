@@ -15,7 +15,7 @@ public class WarehouseMovementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movementId;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private ACTION action;
 
     // Getters and setters
@@ -23,6 +23,7 @@ public class WarehouseMovementEntity {
     private Long prodId; // Replace @ManyToOne ProductEntity product
 
     @ManyToOne
+//    @JoinColumn(name = "rack_id")
     private RackEntity rack;
 
     private LocalDateTime timeOfMovement;

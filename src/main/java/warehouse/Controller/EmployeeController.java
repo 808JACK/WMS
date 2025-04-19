@@ -19,4 +19,11 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
+    @GetMapping("/product/id/{prodId}")
+    public ResponseEntity<ProductStorageResponseDto> getProductById(@PathVariable("prodId") Long prodId) {
+        ProductStorageResponseDto response = employeeService.getProductById(prodId);
+        return ResponseEntity.ok(response);
+    }
+
+
 }

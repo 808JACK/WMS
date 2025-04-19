@@ -20,7 +20,7 @@ public class ProductEntity {
     private Double size;
     private Double weight;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private ACTION action;
     private Long userId;
     private LocalDateTime timeOfMovement;

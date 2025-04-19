@@ -30,12 +30,10 @@ public class WarehouseController {
     }
 
     @GetMapping("/retrieve/{rack_id}/{compartment_id}/{product_id}")
-
     public ResponseEntity<ProductStorageResponseDto> retrieveProduct(@PathVariable ("rack_id") Long rackId,
                                                                      @PathVariable ("compartment_id")Long compartment_id,
                                                                      @PathVariable ("product_id")Long product_id){
         ProductStorageResponseDto responseDto = productService.retrieveProduct(rackId,compartment_id,product_id);
         return ResponseEntity.ok(responseDto);
     }
-
 }

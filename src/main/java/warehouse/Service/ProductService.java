@@ -9,7 +9,6 @@ import warehouse.Entities.*;
 import warehouse.LogicDTOs.ProductStorageRequestDTO;
 import warehouse.LogicDTOs.ProductStorageResponseDto;
 import warehouse.Repos.*;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -24,6 +23,7 @@ public class ProductService {
     private final UserRepo userRepo;
     private final WarehouseMovementRepo movementRepo;
     private final JwtService jwtService;
+    private final EmployeeService employeeService;
 
     @Transactional
     public ProductStorageResponseDto storeProduct(ProductStorageRequestDTO request, Long rackId, Long compartmentId) {
@@ -83,7 +83,7 @@ public class ProductService {
         response.setProdName(product.getProdName());
         response.setCompartmentId(compartment.getCompartmentId());
         response.setRackId(rack.getRackId());
-        response.setAction(product.getAction());
+        response.setAction(String.valueOf(product.getAction()));
         response.setEmpId(empId);
         response.setTimeOfMovement(product.getTimeOfMovement());
         response.setMovementId(movement.getMovementId());
@@ -143,11 +143,14 @@ public class ProductService {
         response.setProdName(product.getProdName());
         response.setCompartmentId(compartment.getCompartmentId());
         response.setRackId(rack.getRackId());
-        response.setAction(ACTION.RETRIEVED);
+        response.setAction(String.valueOf(ACTION.RETRIEVED));
         response.setEmpId(empId);
         response.setTimeOfMovement(movement.getTimeOfMovement());
         response.setMovementId(movement.getMovementId());
 
+
+//        TopRackResponseDTO topRack = employeeService.getTopRetrievedRack();
+//        messagingTemplate.convertAndSend("top/top-rack",topRack);
         return response;
     }
 }
