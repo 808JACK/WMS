@@ -4,12 +4,14 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 import warehouse.LogicDTOs.DailyCountsDTO;
-import warehouse.LogicDTOs.DailyCountsDTO; // Consistent naming
 import warehouse.Repos.WarehouseMovementRepo;
 
 import java.time.LocalDate;
@@ -76,5 +78,14 @@ public class DailyCounterService {
     private void pushCounts() {
         DailyCountsDTO dto = getDailyCounts();
         messagingTemplate.convertAndSend("/topic/daily-counts", dto);
+    }
+
+    @EventListener
+    public void handleWebSocketSubscribe(SessionSubscribeEvent event) {
+        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+        String destination = headerAccessor.getDestination();
+        if ("/topic/daily-counts".equals(destination)) {
+            pushCounts(); // Send current counts to new subscriber
+        }
     }
 }
