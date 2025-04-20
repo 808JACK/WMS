@@ -93,7 +93,6 @@ public class WarehouseService {
             rackResponse.setCompartmentIds(compartmentIds);
             rackResponses.add(rackResponse);
         }
-
         WarehouseResponseDTO response = new WarehouseResponseDTO();
         response.setWarehouseId(warehouse.getWarehouseId());
         response.setTotalArea(warehouse.getTotalArea());

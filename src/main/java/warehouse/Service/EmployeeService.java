@@ -1,20 +1,28 @@
 package warehouse.Service;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import warehouse.Entities.ACTION;
 import warehouse.Entities.ProductEntity;
 import warehouse.Entities.RackEntity;
 import warehouse.Entities.WarehouseMovementEntity;
+import warehouse.LogicDTOs.DailyCountsDTO;
 import warehouse.LogicDTOs.ProductStorageResponseDto;
 import warehouse.Repos.ProductRepo;
 import warehouse.Repos.RackRepo;
 import warehouse.Repos.WarehouseMovementRepo;
 import warehouse.Repos.WarehouseRepo;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +30,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@EnableScheduling
 public class EmployeeService {
 
     private final WarehouseRepo warehouseRepo;
@@ -53,19 +62,5 @@ public class EmployeeService {
         }
         return dto;
     }
-
-//    @Transactional
-//    public TopRackResponseDTO getTopRetrievedRack() {
-//        log.info("Fetching rack with most retrievals");
-//        Optional<Object[]> result = movementRepo.findTopRackByRetrievalCount();
-//        if (result.isEmpty()) {
-//            throw new IllegalStateException("No retrievals found in the warehouse");
-//        }
-//        Object[] data = result.get();
-//        TopRackResponseDTO dto = new TopRackResponseDTO();
-//        dto.setRackId((Long) data[0]);
-//        dto.setRetrievalCount((Long) data[1]);
-//        return dto;
-//    }
 }
 

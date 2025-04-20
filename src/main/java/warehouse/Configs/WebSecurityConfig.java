@@ -32,7 +32,7 @@ public class WebSecurityConfig {
     private final PasswordEncoder passwordEncoder;
 
     private static final String[] publicRoutes = {
-            "/auth/**", "/login/**", "/oauth2/**"
+            "/auth/**", "/login/**", "/oauth2/**","/ws/**"
     };
 
     @Bean

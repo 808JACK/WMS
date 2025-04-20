@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import warehouse.LogicDTOs.ProductStorageResponseDto;
+import warehouse.Service.DailyCounterService;
 import warehouse.Service.EmployeeService;
 
 import java.util.List;
@@ -25,5 +26,5 @@ public class EmployeeController {
         return ResponseEntity.ok(response);
     }
 
-
+    private DailyCounterService dailyCounterService;
 }

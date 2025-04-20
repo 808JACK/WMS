@@ -24,6 +24,7 @@ public class ProductService {
     private final WarehouseMovementRepo movementRepo;
     private final JwtService jwtService;
     private final EmployeeService employeeService;
+    private final DailyCounterService dailyCounterService;
 
     @Transactional
     public ProductStorageResponseDto storeProduct(ProductStorageRequestDTO request, Long rackId, Long compartmentId) {
@@ -78,6 +79,7 @@ public class ProductService {
 
         movement = movementRepo.save(movement);
 
+        dailyCounterService.incrementStoredCount();
         ProductStorageResponseDto response = new ProductStorageResponseDto();
         response.setProdId(product.getProdId());
         response.setProdName(product.getProdName());
@@ -137,6 +139,7 @@ public class ProductService {
         // Delete product after saving movement
         productRepo.delete(product);
 
+
         // Build response
         ProductStorageResponseDto response = new ProductStorageResponseDto();
         response.setProdId(product.getProdId());
@@ -148,7 +151,7 @@ public class ProductService {
         response.setTimeOfMovement(movement.getTimeOfMovement());
         response.setMovementId(movement.getMovementId());
 
-
+        dailyCounterService.incrementRetrievedCount();
 //        TopRackResponseDTO topRack = employeeService.getTopRetrievedRack();
 //        messagingTemplate.convertAndSend("top/top-rack",topRack);
         return response;
