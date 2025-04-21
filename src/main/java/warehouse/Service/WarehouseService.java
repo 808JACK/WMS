@@ -5,17 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import warehouse.Entities.CompartmentEntity;
-import warehouse.Entities.RackEntity;
-import warehouse.Entities.WarehouseEntity;
-import warehouse.LogicDTOs.ProductStorageRequestDTO;
-import warehouse.LogicDTOs.ProductStorageResponseDto;
-import warehouse.LogicDTOs.WarehouseConfigRequestDTO;
-import warehouse.LogicDTOs.WarehouseResponseDTO;
+import warehouse.Entities.*;
+import warehouse.LogicDTOs.*;
 import warehouse.Repos.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +37,7 @@ public class WarehouseService {
         // Create warehouse
         WarehouseEntity warehouse = new WarehouseEntity();
         warehouse.setTotalArea(request.getTotalArea());
+        warehouse.setWareHouseName(request.getWareHouseName());
         warehouse.setRemainingSpace(request.getTotalArea());
         warehouse = warehouseRepo.save(warehouse);
 
@@ -60,8 +57,10 @@ public class WarehouseService {
 
             RackEntity rack = new RackEntity();
             rack.setCapacity(rackConfig.getCapacity());
+            rack.setRackName(rackConfig.getRackName());
             rack.setArea(rackConfig.getCapacity()); // Available area
             rack.setWarehouse(warehouse);
+            rack.setRackName(rack.getRackName());
             rack = rackRepo.save(rack);
 
             // Reduce warehouse space
@@ -89,17 +88,49 @@ public class WarehouseService {
 
             WarehouseResponseDTO.RackResponse rackResponse = new WarehouseResponseDTO.RackResponse();
             rackResponse.setRackId(rack.getRackId());
+            rackResponse.setRackName(rack.getRackName());
             rackResponse.setCapacity(rack.getCapacity());
             rackResponse.setCompartmentIds(compartmentIds);
             rackResponses.add(rackResponse);
         }
         WarehouseResponseDTO response = new WarehouseResponseDTO();
         response.setWarehouseId(warehouse.getWarehouseId());
+        response.setWareHouseName(warehouse.getWareHouseName());
         response.setTotalArea(warehouse.getTotalArea());
         response.setRemainingSpace(warehouse.getRemainingSpace());
         response.setRacks(rackResponses);
 
+
         return ResponseEntity.ok(response);
     }
-
+//
+//    public List<ProductStorageResponseDto> getProductByRack(Long rackId) {
+//        // Validate rack exists
+//        RackEntity rack = rackRepo.findById(rackId)
+//                .orElseThrow(() -> new IllegalArgumentException("Rack does not exist with id: " + rackId));
+//
+//        // Find movements for the rack with action = STORED
+//        List<WarehouseMovementEntity> movements = warehouseRepo.findByRackIdAndAction(rackId, "STORED");
+//
+//        // Map to DTO, fetching product details
+//        return movements.stream()
+//                .map(movement -> {
+//                    ProductEntity product = productRepo.findById(movement.getProdId())
+//                            .orElseThrow(() -> new IllegalArgumentException("Product not found for id: " + movement.getProdId()));
+//                    return new ProductStorageResponseDto(
+//                            product.getProdId(), // prodId
+//                            product.getProdName(), // prodName
+//                            product.getCompartment().getCompartmentId(), // compartmentId
+//                            rackId, // rackId
+//                            product.getCategory().toString(), // category
+//                            Double.valueOf(product.getSize()), // size (assuming String in ProductEntity, convert to Double)
+//                            product.getWeight(), // weight
+//                            product.getAction().toString(), // action
+//                            product.getUserId(), // empId
+//                            product.getTimeOfMovement(), // timeOfMovement
+//                            movement.getMovementId() // movementId
+//                    );
+//                })
+//                .collect(Collectors.toList());
+//    }
 }

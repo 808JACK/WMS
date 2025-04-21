@@ -8,6 +8,8 @@ import warehouse.Service.DailyCounterService;
 import warehouse.Service.ProductService;
 import warehouse.Service.WarehouseService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/warehouse")
@@ -45,4 +47,17 @@ public class WarehouseController {
         // Implement JWT parsing
         return 1L; // Placeholder
     }
+
+//  next make get top accessed rack method
+//  get product by rackID method
+//  get product by compartmentID method
+//  track user activity
+//
+//    @GetMapping("/rack/{rack_id}")
+//    private ResponseEntity<List<ProductStorageResponseDto>> getProductByRack(@PathVariable ("rack_id")Long rackId){
+//
+//        List<ProductStorageResponseDto> responseDto = warehouseService.getProductByRack(rackId);
+//        return ResponseEntity.ok(responseDto);
+//    }
+
 }

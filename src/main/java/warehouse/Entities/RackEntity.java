@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class RackEntity {
 
+    private String rackName;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 

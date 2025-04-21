@@ -52,6 +52,8 @@ public class EmployeeService {
         ProductStorageResponseDto dto = modelMapper.map(product, ProductStorageResponseDto.class);
         dto.setCompartmentId(product.getCompartment().getCompartmentId());
         dto.setEmpId(productRepo.findById(productId).get().getUserId());
+        dto.setRackName(dto.getRackName());
+        dto.setCategory(dto.getCategory());
         dto.setRackId(product.getCompartment().getRack().getRackId());
         Optional<WarehouseMovementEntity> movementOpt = movementRepo.findByProdIdAndAction(productId, ACTION.STORED);
         if (movementOpt.isPresent()) {

@@ -67,7 +67,6 @@ public class ProductService {
         product.setUserId(empId);
         product.setTimeOfMovement(LocalDateTime.now());
         product.setCompartment(compartment);
-
         product = productRepo.save(product);
 
         WarehouseMovementEntity movement = new WarehouseMovementEntity();
@@ -89,6 +88,10 @@ public class ProductService {
         response.setEmpId(empId);
         response.setTimeOfMovement(product.getTimeOfMovement());
         response.setMovementId(movement.getMovementId());
+        response.setRackName(rack.getRackName());
+        response.setSize(product.getSize());
+        response.setWeight(product.getWeight());
+        response.setCategory(product.getCategory().toString());
 
         return response;
     }
@@ -150,6 +153,7 @@ public class ProductService {
         response.setEmpId(empId);
         response.setTimeOfMovement(movement.getTimeOfMovement());
         response.setMovementId(movement.getMovementId());
+        response.setRackName(rack.getRackName());
 
         dailyCounterService.incrementRetrievedCount();
 //        TopRackResponseDTO topRack = employeeService.getTopRetrievedRack();

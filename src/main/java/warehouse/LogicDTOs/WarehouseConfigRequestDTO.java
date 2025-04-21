@@ -4,8 +4,17 @@ import java.util.List;
 
 public class WarehouseConfigRequestDTO {
 
+    private String wareHouseName;
     private Double totalArea;
     private List<RackConfig> racks;
+
+    public String getWareHouseName() {
+        return wareHouseName;
+    }
+
+    public void setWareHouseName(String wareHouseName) {
+        this.wareHouseName = wareHouseName;
+    }
 
     public Double getTotalArea() {
         return totalArea;
@@ -24,7 +33,18 @@ public class WarehouseConfigRequestDTO {
     }
 
     public static class RackConfig {
+
+        private String rackName;
         private Double capacity;
+
+        public String getRackName() {
+            return rackName;
+        }
+
+        public void setRackName(String rackName) {
+            this.rackName = rackName;
+        }
+
         private Integer numberOfCompartments;
 
         public Double getCapacity() {

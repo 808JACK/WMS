@@ -12,6 +12,16 @@ import java.util.List;
 @Setter
 public class WarehouseEntity {
 
+    private String wareHouseName;
+
+    public String getWareHouseName() {
+        return wareHouseName;
+    }
+
+    public void setWareHouseName(String wareHouseName) {
+        this.wareHouseName = wareHouseName;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long warehouseId;

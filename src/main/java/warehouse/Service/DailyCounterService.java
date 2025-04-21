@@ -17,6 +17,9 @@ import warehouse.Repos.WarehouseMovementRepo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
@@ -25,7 +28,7 @@ import java.time.LocalTime;
 public class DailyCounterService {
     private final WarehouseMovementRepo movementRepo;
     private final SimpMessagingTemplate messagingTemplate;
-
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private long storedCount = 0;
     private long retrievedCount = 0;
 
@@ -84,8 +87,12 @@ public class DailyCounterService {
     public void handleWebSocketSubscribe(SessionSubscribeEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String destination = headerAccessor.getDestination();
+        log.info("WebSocket subscription detected: destination={}", destination);
         if ("/topic/daily-counts".equals(destination)) {
-            pushCounts(); // Send current counts to new subscriber
+            pushCounts(); // Immediate push
+            // Schedule push after 5 seconds
+            scheduler.schedule(this::pushCounts, 5, TimeUnit.SECONDS);
+            log.info("Scheduled counts push in 5 seconds");
         }
     }
 }
